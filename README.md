@@ -6,3 +6,8 @@ rwx is a shorthand for the three main types of file permissions in Unix-like OS:
 commands learned : ps aux,ps -ef,top,htop, kill, jobs, bg, fg, nohup, disown, nice.
 Topics learner: foreground and background processes, cron Expressions and process priority
 Bulit a script that monitors a process and auto-restarts if crashes.
+# Day4 - Linux Users & Groups permissions
+-rw-r--r-- → permissions
+root → owner
+root → group
+commands: chmod, chgrp, chown.
