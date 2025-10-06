@@ -3,100 +3,183 @@ rwx is a shorthand for the three main types of file permissions in Unix-like OS:
  chown - change file ownership.
  umask- sets the user file-creation mask, which determines the default permissions for new files and directories.
 
- #!/bin/bash
+Understand user, group, and permission management in Linux
 
-show_help() {
-    echo "Usage: $0 --name <NAME> --env <ENV>"
-    echo "Example: $0 --name harish --env dev"
-}
+Learn real-world DevOps use cases (EC2 log file access, Jenkins secret folders, Docker volumes, etc.)
 
-NAME=""
-ENV=""
+Perform hands-on tasks that replicate what happens in real production servers
 
-while [[ "$#" -gt 0 ]]; do
-    case $1 in
-        --name) NAME="$2"; shift ;;
-        --env) ENV="$2"; shift ;;
-        --help) show_help; exit 0 ;;
-        *) echo "Unknown option: $1"; show_help; exit 1 ;;
-    esac
-    shift
-done
+🔹 1. Why User Management Is Crucial in DevOps
 
-echo "Deploying app for $NAME in $ENV environment..."
+In real DevOps environments:
 
-========================================================================================================================================
+EC2s, Jenkins agents, and Docker containers each run under different users
 
-Imagine you’re a DevOps engineer.
+Permissions decide who can read logs, edit configs, or deploy apps
 
-You manage an app that runs on AWS EC2.
+Misconfigured permissions = downtime or security breach
 
-You need a simple tool to deploy, start, or stop the app in different environments (dev/staging/prod).
+Example:
 
-Instead of typing commands manually, you make a Bash CLI tool.
+Jenkins job fails to deploy → reason: Permission denied while writing /var/www/app/config.json
+
+🔹 2. Creating Users & Groups
+➤ Create a new user and group
+sudo groupadd devops
+sudo useradd -m -s /bin/bash -g devops harish
+sudo passwd harish
 
 
-#!/bin/bash
+-m: creates a home directory
 
-LOG_FILE="/var/log/deployment_tool.log"
+-s /bin/bash: sets the default shell
 
-show_help() {
-    echo "Usage: $0 --env <dev|staging|prod> --action <deploy|start|stop>"
-    echo "Example: $0 --env prod --action deploy"
-}
+-g: assigns a group
 
-ENV=""
-ACTION=""
+👉 In DevOps — you often create service users like:
 
-# Parse flags
-while [[ "$#" -gt 0 ]]; do
-    case $1 in
-        --env) ENV="$2"; shift ;;
-        --action) ACTION="$2"; shift ;;
-        --help) show_help; exit 0 ;;
-        *) echo "Unknown option: $1"; show_help; exit 1 ;;
-    esac
-    shift
-done
+jenkins (runs CI jobs)
 
-# Validate inputs
-if [[ -z "$ENV" || -z "$ACTION" ]]; then
-    echo "Error: Missing required flags." | tee -a $LOG_FILE
-    show_help
-    exit 1
-fi
+docker (runs containers)
 
-# Simulate actions
-case $ACTION in
-    deploy)
-        echo "[$(date)] Deploying app to $ENV environment..." | tee -a $LOG_FILE
-        # Example (real world, mocked here):
-        # scp app.zip ec2-user@${ENV}_server:/var/www/
-        ;;
-    start)
-        echo "[$(date)] Starting app in $ENV environment..." | tee -a $LOG_FILE
-        # Example:
-        # ssh ec2-user@${ENV}_server "systemctl start myapp"
-        ;;
-    stop)
-        echo "[$(date)] Stopping app in $ENV environment..." | tee -a $LOG_FILE
-        # Example:
-        # ssh ec2-user@${ENV}_server "systemctl stop myapp"
-        ;;
-    *)
-        echo "Error: Invalid action. Use deploy|start|stop" | tee -a $LOG_FILE
-        exit 1
-        ;;
-esac
+ansible (runs automation scripts)
+
+🔹 3. Checking User Info
+id harish
+groups harish
+cat /etc/passwd | grep harish
 
 
-💡 Why This Matters (Real DevOps Skills)
+👉 This helps verify which group or role a user belongs to (important for debugging permissions).
 
-Arguments (--env, --action) → same as Jenkins jobs (build --env=staging).
+🔹 4. File Ownership & Permissions
+➤ Check permissions:
+ls -l /var/log/syslog
 
-Logging to /var/log → like systemd services.
 
-SSH/Deploy commands → exactly how you’d automate AWS EC2 or Docker container tasks.
+You’ll see something like:
 
-Reusability → one script works for multiple environments.
+-rw-r----- 1 syslog adm 12345 Oct 6 10:00 /var/log/syslog
+
+
+This means:
+
+syslog user owns it
+
+adm group can read it
+
+Others cannot
+
+➤ Change ownership:
+sudo chown harish:devops /var/log/process_monitor.log
+
+➤ Change permissions:
+sudo chmod 640 /var/log/process_monitor.log
+
+
+Explanation:
+
+6 = read + write (for owner)
+
+4 = read (for group)
+
+0 = no access (for others)
+
+🔹 5. Real-World DevOps Scenarios
+🧩 Scenario 1 — Jenkins log file access
+
+Jenkins runs as user jenkins
+
+Log directory /var/log/jenkins owned by root
+
+Jenkins job fails with:
+
+Permission denied: cannot write to /var/log/jenkins/job.log
+
+
+Fix:
+
+sudo chown -R jenkins:jenkins /var/log/jenkins
+
+🧩 Scenario 2 — Docker container volume
+
+App container mounts /app/data from host
+
+Host folder owned by root, app runs as non-root
+Fix:
+
+sudo chown -R 1000:1000 /app/data
+
+
+(Container user ID 1000 now owns the data folder.)
+
+🧩 Scenario 3 — EC2 Application logs
+
+Developer connects via SSH but can’t read /var/log/app
+
+Logs owned by appuser
+Fix:
+
+sudo usermod -aG appuser developer
+
+
+Now developer gets read access via group membership.
+
+🔹 6. Hands-On Task for Day 8
+🧭 Task Steps
+
+Create two users:
+
+sudo useradd -m devuser
+sudo useradd -m opsuser
+
+
+Create a shared group:
+
+sudo groupadd devops_team
+
+
+Add both users to this group:
+
+sudo usermod -aG devops_team devuser
+sudo usermod -aG devops_team opsuser
+
+
+Create a shared log directory:
+
+sudo mkdir /var/log/devops_logs
+sudo chown root:devops_team /var/log/devops_logs
+sudo chmod 770 /var/log/devops_logs
+
+
+Switch user and test:
+
+sudo su - devuser
+touch /var/log/devops_logs/test1.log
+sudo su - opsuser
+touch /var/log/devops_logs/test2.log
+
+
+✅ Both users in devops_team should have access — just like multiple Jenkins or EC2 service accounts working together.
+
+🧠 Extra Tip: Managing Privileges
+
+To give a user temporary sudo access, edit the sudoers file:
+
+sudo visudo
+
+
+Add:
+
+harish ALL=(ALL) NOPASSWD: /bin/systemctl restart nginx
+
+
+→ Now Harish can restart Nginx without full root access (common DevOps practice).
+
+💡 End-of-Day Summary
+Concept	Real-World Use
+Users & Groups	Separate Jenkins/Docker/Ansible accounts
+chown & chmod	Manage file and log permissions
+sudoers	Granular control for automation scripts
+Shared group access	Multiple services working together securely
 
