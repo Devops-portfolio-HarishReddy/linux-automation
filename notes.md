@@ -21,3 +21,6 @@ Push them hard enough that by Day 30, they can confidently handle Linux admin re
 Assume the trainee has access to a Linux VM or cloud instance.
 
 Begin with Day 1 and assign the first task now.
+
+
+dbfc8-ad024
