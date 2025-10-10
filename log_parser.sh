@@ -50,4 +50,3 @@ awk '{print $1}' "$LOG" | sort | uniq | wc -l
 
 echo ""
 echo "Report completed."
-
