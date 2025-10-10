@@ -41,3 +41,33 @@ example: Jenkins not accessible on :8080. Use netstat → See Jenkins is running
 *telnet - Test TCP connectivity to a specific port. example command: telnet google.com 80, real world scenario: Database not reachable from app. Run telnet db-host 3306 → Connection refused → Security group/firewall issue.
 
 *nslookup or dig: Test DNS resolution. example: You added a new domain in Route53 but app isn’t reachable. nslookup myapp.com shows old IP → DNS propagation delay.
+
+# Day 8 - User, group and permission management in linux
+
+commands - groupadd, useradd, usermod
+
+why permissions are important: In linux each files has permissions, permission decide who can read logs, edit config or deploy. 
+
+Misconfigured permissions = downtime or security breach
+
+# Day 9 - Text Tools
+
+Commands: grep, sed, awk, cut, sort, uniq, tr, xargs
+
+These text tools are your daily weapons for debugging logs, extracting metrics, filtering large outputs, creating quick reports, and building lightweight pipelines inside shell scripts and CI jobs.
+
+grep — filter lines by pattern
+
+sed — stream editor (substitute, delete, transform)
+
+awk — field-based processing & reporting (powerful)
+
+cut — cut columns by delimiter or position
+
+sort — sort lines
+
+uniq — collapse duplicate adjacent lines
+
+tr — translate or delete characters
+
+xargs — build & run commands from STDIN
