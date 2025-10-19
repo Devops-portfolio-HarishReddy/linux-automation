@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 # === CONFIG ===
-SOURCE_DIR="/var/www/html"         # folder to back up (change as needed)
+SOURCE_DIR="$HOME/test_data"         # folder to back up (change as needed)
 BACKUP_DIR="$HOME/linux-automation/backups"
 RETENTION_DAYS=7                   # keep backups for 7 days
 DATE_STR=$(date +%F_%H-%M-%S)
