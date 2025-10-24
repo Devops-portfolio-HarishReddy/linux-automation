@@ -1,7 +1,18 @@
 #!/bin/bash
 # user_mgmt.sh
 set -euo pipefail
-FILE="users.csv"
+usage() {
+  echo "Usage: $0 [csv_file]"
+  echo "Example: $0 users.csv"
+  exit 1
+}
+
+if [[ "$1" == "--help" || "$#" -ne 1 ]]; then
+  usage
+fi
+
+FILE="$1"
+
 
 if [[ ! -f "$FILE" ]]; then
   echo "CSV file not found! (Expected: users.csv)"
@@ -17,3 +28,4 @@ while IFS=, read -r username password; do
     echo "User $username created."
   fi
 done < "$FILE"
+
