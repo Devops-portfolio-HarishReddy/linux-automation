@@ -1,23 +1,18 @@
-# Linux Automation Toolkit
+# 🧰 Linux Automation Toolkit
 
-## Overview
-This project automates common Linux admin tasks — health checks, backups, user management, log rotation, and firewall setup.
+## 🚀 Overview
+A collection of Bash scripts to automate daily Linux admin tasks — monitoring, backups, log rotation, user management, and firewall configuration.
 
-## Features
-- Health Monitoring
-- Automated Backups (7-day retention)
-- Bulk User Creation
-- Log Archiving
-- Basic Firewall Configuration
+## ⚙️ Features
+- ✅ Health monitoring (CPU, Memory, Disk)
+- 💾 Automated backups with 7-day retention
+- 👥 Bulk user creation via CSV
+- 🧹 Log rotation and archival
+- 🔐 Firewall hardening (UFW)
 
-## Usage
-1. Clone repo
-2. chmod +x *.sh
-3. Run `./toolkit.sh`
-
-## Skills Demonstrated
-- Bash scripting
-- Process automation
-- Linux system management
-- Security basics
-- Cron scheduling
+## 🧩 How to Use
+Clone the repo and give permissions:
+```bash
+git clone https://github.com/yourname/linux-automation.git
+cd linux-automation
+chmod +x *.sh
