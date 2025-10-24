@@ -12,16 +12,12 @@ if [[ "$1" == "--help" || "$#" -ne 2 ]]; then
 fi
 
 
-SRC_DIR="/home/ubuntu/test_data"
-BACKUP_DIR="/home/ubuntu/backups"
+SRC_DIR="$1"
+BACKUP_DIR="$2"
 DATE=$(date +%F)
-
 mkdir -p "$BACKUP_DIR"
-tar -czf "$BACKUP_DIR/backup_$DATE.tar.gz"
-
-# Delete old backups 
-
+tar -czf "$BACKUP_DIR/backup_$DATE.tar.gz" "$SRC_DIR"
 find "$BACKUP_DIR" -type f -mtime +7 -delete
+echo "Backup completed successfully."
 
-echo "Backup completed and old backups removed."
 
