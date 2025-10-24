@@ -1,7 +1,16 @@
 #!/bin/bash
 set -euo pipefail
+usage() {
+  echo "Usage: $0 [output_log]"
+  echo "Example: $0 /var/log/system_health.log"
+  exit 1
+}
 
-LOGFILE="/var/log/system_health.log"
+if [[ "$1" == "--help" || "$#" -ne 1 ]]; then
+  usage
+fi
+
+LOGFILE="$1"
 
 {
 
