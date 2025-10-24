@@ -1,5 +1,17 @@
 #!/bin/bash
 set -euo pipefail
+
+usage() {
+  echo "Usage: $0 [source_dir] [backup_dir]"
+  echo "Example: $0 /home/ubuntu/data /home/ubuntu/backups"
+  exit 1
+}
+
+if [[ "$1" == "--help" || "$#" -ne 2 ]]; then
+  usage
+fi
+
+
 SRC_DIR="/home/ubuntu/test_data"
 BACKUP_DIR="/home/ubuntu/backups"
 DATE=$(date +%F)
