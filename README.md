@@ -327,3 +327,310 @@ I then kept monitoring until the gateway team fixed a network issue on their sid
 ⸻
 
 If you want, I can now give you a list of likely direct questions (in bullet form) and short model answers so you can practice them one by one.
+Excellent, Harish.
+Now we are going to map your preparation exactly to THIS interview format.
+
+Your interview has TWO parts:
+
+⸻
+
+⭐ PART 1 — THEORY + CONCEPTUAL QUESTIONS
+
+(Covering Networking + Email + SysAdmin + Debugging)
+
+⭐ PART 2 — PRACTICAL TROUBLESHOOTING EXERCISE
+
+(A scenario where you must find the root cause)
+
+⸻
+
+I will prepare you EXACTLY FOR BOTH PARTS.
+
+Below is a FULL BLUEPRINT + scripts + answers.
+
+⸻
+
+⭐ PART 1 — THEORY + KNOWLEDGE QUESTIONS
+
+They will ask the following categories:
+
+⸻
+
+🔵 SECTION A: OSI MODEL + PROTOCOLS
+
+✔ They expect:
+	•	What is OSI?
+	•	Layer names
+	•	Examples
+	•	TCP vs UDP
+	•	DNS, HTTP, HTTPS
+	•	Packet flow
+	•	What happens when Google.com is opened
+
+⭐ OSI MODEL — SUPER SIMPLE VERSION
+
+“OSI has 7 layers. It’s a logical model that explains how data travels in a network.”
+
+Layers (memorize this):
+	1.	Physical – cables, signals
+	2.	Data Link – MAC address
+	3.	Network – IP address, routing
+	4.	Transport – TCP/UDP
+	5.	Session – sessions
+	6.	Presentation – encryption
+	7.	Application – HTTP, SMTP, DNS
+
+Interview Answer:
+
+“The important layers for troubleshooting are Network (IP), Transport (TCP/UDP), and Application (DNS, HTTP, SMTP).”
+
+⸻
+
+🔵 SECTION B: “HOW THE WEB WORKS”
+
+(This WILL be asked)
+
+⭐ Interview Question
+
+“Can you explain what happens when you open google.com?”
+
+Perfect Answer:
+
+“When I type google.com, the browser first checks DNS to convert the domain name into an IP address.
+Once IP is found, the browser creates a TCP connection to the server on port 443.
+Then it sends an HTTPS request, the server responds with content, and the browser renders the page.”
+
+If they want deeper:
+
+“DNS resolution → TCP handshake → SSL/TLS handshake → HTTP request → HTTP response.”
+
+⸻
+
+🔵 SECTION C: EMAIL — VERY IMPORTANT
+
+They will ask:
+	•	How email works?
+	•	SMTP vs IMAP vs POP3
+	•	SPF, DKIM, DMARC
+	•	What happens when you press Send?
+
+⭐ PERFECT ANSWER
+
+“When I press send, my email client connects to my SMTP server.
+Server checks my domain’s SPF, DKIM, DMARC.
+Then it checks the receiver domain’s MX records.
+SMTP delivers the email to the destination server.
+The receiver reads it using IMAP or POP3.”
+
+You already memorized DNS records earlier — GOOD.
+
+⸻
+
+🔵 SECTION D: SYSADMIN (Windows + Linux)
+
+They will ask:
+	•	Are you comfortable with Linux?
+	•	What logs do you check?
+	•	Journalctl?
+	•	Systemctl?
+	•	Permissions?
+	•	AD tasks?
+
+⭐ Answer:
+
+“Yes, I am comfortable with both Linux and Windows.
+On Linux I manage services using systemctl, check logs using journalctl and /var/log, handle user and permissions, SSH, cron jobs, and OS patching.
+On Windows, I handle AD operations like user creation, password reset, group membership, and login troubleshooting.”
+
+This matches your experience.
+
+⸻
+
+🔵 SECTION E: PROGRAMMING / DEBUGGING
+
+They won’t ask you to write code.
+They only want to know if you can read logs and understand errors.
+
+⭐ Answer:
+
+“I can debug by reading logs and error messages.
+I used bash scripts, cron jobs and basic SQL queries in my jobs.
+I can identify syntax errors, missing dependencies, and troubleshoot based on logs.”
+
+⸻
+
+🔵 SECTION F: CLOUD + WORKSPACE
+
+They will ask:
+	•	Have you worked on O365?
+	•	Have you worked on Cloud?
+	•	Have you seen Google Workspace?
+
+Here’s your perfect answer:
+
+⭐ Answer:
+
+“I have not worked directly inside Google Workspace, but I have good experience managing enterprise devices and accounts in Azure AD, MDM tools, and O365 onboarding.
+I understand identity management, MFA, access provisioning, email routing, and SSO basics.
+I am also familiar with cloud VMs and IAM concepts from my Infosys project.”
+
+This is SAFE and TRUE.
+
+⸻
+
+⭐ PART 2 — TROUBLESHOOTING EXERCISE
+
+They will give you a scenario like:
+	•	“A user cannot access a website — what do you check?”
+	•	“Emails are not received — how do you troubleshoot?”
+	•	“A service is down — what steps do you take?”
+	•	“A machine cannot connect to network — what do you do?”
+
+I will prepare TROUBLESHOOTING FRAMEWORKS you can apply to ANY QUESTION.
+
+⸻
+
+⭐ UNIVERSAL TROUBLESHOOTING FRAMEWORK
+
+Use this ALWAYS:
+
+🔵 1. Identify the problem
+
+Ask:
+	•	What exactly is failing?
+	•	Since when?
+	•	What changed?
+
+🔵 2. Reproduce the issue
+
+Try to confirm the error.
+
+🔵 3. Check logs
+	•	Linux: journalctl, /var/log
+	•	Windows: Event viewer
+	•	Email: SMTP logs
+	•	Web: Browser console
+
+🔵 4. Check connectivity
+
+Use:
+	•	ping
+	•	nslookup/dig
+	•	traceroute
+	•	curl
+	•	telnet/openssl
+
+🔵 5. Check configuration
+	•	DNS records
+	•	Firewall rules
+	•	Permissions
+	•	Service status
+	•	Authentication (MFA, AD, OAuth)
+
+🔵 6. Fix or escalate
+
+Depending on scope.
+
+🔵 7. Document RCA & Close ticket
+
+SLA-based closure.
+
+⸻
+
+⭐ EXAMPLE TROUBLESHOOTING SCENARIOS (For Practice)
+
+⸻
+
+💥 Scenario 1 — “User cannot access a website”
+
+Your answer:
+
+“I would first check the network connection using ping.
+Then check DNS using nslookup.
+If DNS is fine, I check traceroute to check routing.
+Then use curl to check HTTP response.
+If server is down, I check service logs using journalctl or systemctl.”
+
+⸻
+
+💥 Scenario 2 — “Emails failing”
+
+Your answer:
+
+“I will check MX record → SPF → DKIM → DMARC → SMTP logs → Firewall → Mail Queue.”
+
+⸻
+
+💥 Scenario 3 — “User cannot log in”
+
+Your answer:
+
+“Check AD account status, password expired/incorrect, group membership, MFA, device sync.”
+
+⸻
+
+💥 Scenario 4 — “Linux service is down”
+
+Your answer:
+
+“Check systemctl status → journalctl -u → logs → restart service → check config → verify ports → monitor.”
+
+⸻
+
+⭐ PART 3 — EXPERIENCE QUESTIONS (They WILL ask you this)
+
+❓ “Tell us about your past sysadmin experience.”
+
+Your answer:
+
+“I worked as sysadmin in Cognizant, Tech Mahindra and Infosys.
+I handled Linux servers, system logs, services, user management, AD operations, device support, and SLA-based escalation.
+I monitored alerts, performed troubleshooting, and resolved server/user issues daily.”
+
+⸻
+
+⭐ PART 4 — BEHAVIORAL CHECK
+
+They check:
+	•	Are you customer focused?
+	•	Do you communicate clearly?
+	•	Do you take ownership?
+
+⭐ Answer:
+
+“In all my roles, I focused on customer satisfaction by communicating clearly, documenting steps, and resolving issues within SLA.
+I always try to find root cause, not just apply temporary fixes.”
+
+⸻
+
+⭐ PART 5 — HOW YOU SHOULD TALK IN THE INTERVIEW
+
+Use this communication style:
+
+✔ Short answers
+
+✔ Simple English
+
+✔ Structured
+
+✔ Always explain steps
+
+✔ No panic, speak slowly
+
+✔ End every answer with a confidence line
+
+Example:
+
+“…and that’s how I would troubleshoot that issue.”
+
+⸻
+
+⭐ NOW LET’S PREPARE THE PRACTICAL EXERCISE
+
+Tell me:
+
+Do you want me to now give you:
+
+A) A realistic troubleshooting exercise and train you step-by-step
+OR
+B) A full rapid-fire 50-question preparation to strengthen Part 1?
